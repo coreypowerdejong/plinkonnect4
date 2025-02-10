@@ -9,3 +9,10 @@ script = ExtResource("1_se7pe")
 offset_right = 18.0
 offset_bottom = 18.0
 rotation = 0.785398
+
+[node name="CheckButton" type="CheckButton" parent="."]
+offset_right = 44.0
+offset_bottom = 24.0
+button_pressed = true
+
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

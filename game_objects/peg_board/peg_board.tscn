@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ltf3eh8n06s"]
+
+[ext_resource type="Script" path="res://game_objects/peg_board/peg_board.gd" id="1_83l3h"]
+
+[node name="peg_board" type="Node2D"]
+script = ExtResource("1_83l3h")

@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://d4l51ars4vutf"]
+[gd_scene load_steps=2 format=3 uid="uid://d4l51ars4vutf"]
+
+[ext_resource type="PackedScene" uid="uid://1ltf3eh8n06s" path="res://game_objects/peg_board/peg_board.tscn" id="1_ccpy7"]
 
 [node name="Game" type="Node2D"]
+
+[node name="peg_board" parent="." instance=ExtResource("1_ccpy7")]

@@ -14,7 +14,6 @@ func setup_row(length: int, spacing: int, level: int) -> Array:
 		var peg = PEG.instantiate()
 		var peg_offset = Vector2(global_position.x + n * spacing + offset, spacing * level)
 		peg.global_position = global_position + peg_offset
-		print("Creating peg at " + str(peg.global_position))
 		row.append(peg)
 		add_child(peg)
 	return row
@@ -42,10 +41,13 @@ func setup_connections(rows: Array):
 						line2d.default_color = Color("YELLOW_GREEN")
 						add_child(line2d)
 
+func calculate_size(num_pegs: int, num_rows: int, peg_spacing: int) -> Vector2i:
+	var width = (num_pegs - 1) * peg_spacing
+	var height = (num_rows - 1) * peg_spacing
+	return Vector2i(width, height)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	global_position = Vector2(30, 30)
 	for i in NUM_PEG_ROWS:
 		rows.append(setup_row(PEGS_LENGTH - (i % 2), PEG_SPACING, i))
 	setup_connections(rows)
@@ -53,4 +55,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	var peg_board_size: Vector2i = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
+	var screen_size = get_viewport().size
+	global_position = (screen_size - peg_board_size) / 2

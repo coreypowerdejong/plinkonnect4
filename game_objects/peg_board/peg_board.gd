@@ -1,8 +1,5 @@
 extends Node2D
 
-var row1
-var row2
-var row3
 var rows = []
 const PEG = preload("res://game_objects/peg/peg.tscn")
 
@@ -18,13 +15,17 @@ func setup_row(length: int, spacing: int, level: int) -> Array:
 		row.append(peg)
 		add_child(peg)
 	return row
-	
+
+func setup_connections(rows: Array):
+	var edges = []
+	for row in rows:
+		pass
+	pass
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	global_position = Vector2(30, 30)
-	#row1 = setup_row(7, 40, 0)
-	#row2 = setup_row(6, 40, 1)
-	#row3 = setup_row(7, 40, 2)
 	for i in 4:
 		rows.append(setup_row(7 - (i % 2), 60, i))
 

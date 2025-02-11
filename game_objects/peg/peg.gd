@@ -6,6 +6,9 @@ var connections = []
 var enabled: bool = true
 var locked: bool = false
 
+func set_color(color: Color = Color("WHITE")):
+	$ColorRect.color = color
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CheckButton.disabled = locked

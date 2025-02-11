@@ -1,7 +1,11 @@
 extends Node2D
 
 var rows = []
+var slots = []
+var fall_path = []
+var fall_line = Line2D.new()
 const PEG = preload("res://game_objects/peg/peg.tscn")
+const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
 const PEGS_LENGTH = 7
 const PEG_SPACING = 90
 const NUM_PEG_ROWS = 6
@@ -20,6 +24,12 @@ func setup_row(length: int, spacing: int, level: int, locked: bool = false) -> A
 		add_child(peg)
 	return row
 
+func find_peg_below(rows: Array, i: int, j: int):
+	var lookahead = 0
+	while not rows[i+1+lookahead][j].enabled:
+		lookahead += 2
+	return rows[i+1+lookahead][j]
+	
 func setup_connections(rows: Array):
 	for i in len(rows) - 1:
 		if i % 2 == 0:
@@ -28,29 +38,21 @@ func setup_connections(rows: Array):
 				if not rows[i][j].enabled:
 					continue
 				if (j < len(rows[i+1])):
-					var lookahead = 0
-					while not rows[i+1+lookahead][j].enabled:
-						lookahead += 2
-					rows[i][j].connections.append(rows[i+1+lookahead][j])
+					var next_peg = find_peg_below(rows, i, j)
+					rows[i][j].connections.append(next_peg)
 				if (j > 0):
-					var lookahead = 0
-					while not rows[i+1+lookahead][j-1].enabled:
-						lookahead += 2
-					rows[i][j].connections.append(rows[i+1+lookahead][j-1])
+					var next_peg = find_peg_below(rows, i, j-1)
+					rows[i][j].connections.append(next_peg)
 		else:
 			for j in len(rows[i]):
 				rows[i][j].connections = []
 				if not rows[i][j].enabled:
 					continue
 				if (j < len(rows[i+1])):
-					var lookahead = 0
-					while not rows[i+1+lookahead][j+1].enabled:
-						lookahead += 2
-					rows[i][j].connections.append(rows[i+1+lookahead][j+1])
-				var lookahead = 0
-				while not rows[i+1+lookahead][j].enabled:
-					lookahead += 2
-				rows[i][j].connections.append(rows[i+1+lookahead][j])
+					var next_peg = find_peg_below(rows, i, j+1)
+					rows[i][j].connections.append(next_peg)
+				var next_peg = find_peg_below(rows, i, j)
+				rows[i][j].connections.append(next_peg)
 		if OS.is_debug_build():
 			for j in len(rows[i]):
 				for connection in rows[i][j].connections:
@@ -67,11 +69,49 @@ func calculate_size(num_pegs: int, num_rows: int, peg_spacing: int) -> Vector2i:
 	var height = (num_rows - 1) * peg_spacing
 	return Vector2i(width, height)
 
+func get_size() -> Vector2i:
+	return calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
+
+func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
+	var slots = []
+	for n in num_slots:
+		var slot = TOKEN_SLOT.instantiate()
+		slot.global_position = Vector2(global_position.x + n * slot_spacing, global_position.y - 30)
+		slot.id = n
+		slot.activated.connect(_on_token_inserted)
+		slots.append(slot)
+		add_child(slot)
+	return slots
+
+
 func _on_peg_toggled(state: bool):
 	for child in get_children():
 		if child is Line2D:
 			child.queue_free()
 	setup_connections(rows)
+
+func _on_token_inserted(slot_id: int):
+	for peg in fall_path:
+		peg.set_color()
+	fall_path = []
+	# find_peg_below starts at row -1 to work on even rows
+	var current_peg = find_peg_below(rows, -1, slot_id)
+	while current_peg.connections:
+		fall_path.append(current_peg)
+		current_peg = current_peg.connections.pick_random()
+	fall_path.append(current_peg)
+	for peg in fall_path:
+		peg.set_color(Color("CRIMSON"))
+	
+	if OS.is_debug_build():
+		if is_instance_valid(fall_line):
+			fall_line.queue_free()
+		fall_line = Line2D.new()
+		for peg in fall_path:
+			fall_line.add_point(peg.position)
+			fall_line.width = 5
+			fall_line.default_color = Color("ORANGE")
+			add_child(fall_line)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,6 +121,7 @@ func _ready():
 			locked = true
 		rows.append(setup_row(PEGS_LENGTH - (i % 2), PEG_SPACING, i, locked))
 	setup_connections(rows)
+	slots = create_token_slots(PEGS_LENGTH, PEG_SPACING)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

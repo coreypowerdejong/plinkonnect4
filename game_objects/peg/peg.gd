@@ -5,6 +5,11 @@ signal peg_toggled(state: bool)
 var connections = []
 var enabled: bool = true
 var locked: bool = false
+var idx: int
+var secret: bool = false:
+	set(value):
+		if value == true:
+			set_color(Color("DIM_GRAY"))
 
 func set_color(color: Color = Color("WHITE")):
 	$ColorRect.color = color

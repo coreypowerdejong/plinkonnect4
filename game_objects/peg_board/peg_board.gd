@@ -10,6 +10,8 @@ const PEGS_LENGTH = 7
 const PEG_SPACING = 90
 const NUM_PEG_ROWS = 5
 
+signal token_inserted(slot_id: int)
+
 func setup_row(length: int, spacing: int, level: int, locked: bool = false, secret: bool = false) -> Array:
 	var row = []
 	var offset_mag = spacing / 2
@@ -119,6 +121,7 @@ func _on_token_inserted(slot_id: int) -> int:
 			add_child(fall_line)
 	
 	print("Token leaving from " + str(fall_path[-1].idx))
+	token_inserted.emit(fall_path[-1].idx)
 	return fall_path[-1].idx
 
 # Called when the node enters the scene tree for the first time.
@@ -140,5 +143,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var peg_board_size: Vector2i = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
-	var screen_size = get_viewport().size
-	global_position = (screen_size - peg_board_size) / 2

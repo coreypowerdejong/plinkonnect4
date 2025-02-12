@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://d4l51ars4vutf"]
+[gd_scene load_steps=4 format=3 uid="uid://d4l51ars4vutf"]
 
+[ext_resource type="Script" path="res://game_objects/game.gd" id="1_5g54d"]
 [ext_resource type="PackedScene" uid="uid://1ltf3eh8n06s" path="res://game_objects/peg_board/peg_board.tscn" id="1_ccpy7"]
+[ext_resource type="PackedScene" uid="uid://jhb3vk2hscip" path="res://game_objects/token_board/token_board.tscn" id="2_12akp"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_5g54d")
 
 [node name="peg_board" parent="." instance=ExtResource("1_ccpy7")]
+
+[node name="TokenBoard" parent="." instance=ExtResource("2_12akp")]
+
+[connection signal="token_inserted" from="peg_board" to="." method="_on_peg_board_token_inserted"]

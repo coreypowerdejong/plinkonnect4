@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://jhb3vk2hscip"]
+
+[ext_resource type="Script" path="res://game_objects/token_board/token_board.gd" id="1_4t76v"]
+
+[node name="TokenBoard" type="Node2D"]
+script = ExtResource("1_4t76v")

@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://dgn4e3irixiio"]
+[gd_scene load_steps=2 format=3 uid="uid://dgn4e3irixiio"]
+
+[ext_resource type="Script" path="res://game_objects/token/token.gd" id="1_8n4l8"]
 
 [node name="Token" type="Sprite2D"]
+script = ExtResource("1_8n4l8")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8

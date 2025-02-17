@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu6upmr1oab3w"]
+
+[ext_resource type="Script" path="res://game_objects/token_grid/token_grid.gd" id="1_ux0pq"]
+
+[node name="TokenGrid" type="Node2D"]
+z_index = 1
+script = ExtResource("1_ux0pq")

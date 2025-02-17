@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://jhb3vk2hscip"]
+[gd_scene load_steps=3 format=3 uid="uid://jhb3vk2hscip"]
 
 [ext_resource type="Script" path="res://game_objects/token_board/token_board.gd" id="1_4t76v"]
+[ext_resource type="PackedScene" uid="uid://cu6upmr1oab3w" path="res://game_objects/token_grid/token_grid.tscn" id="2_lf31o"]
 
 [node name="TokenBoard" type="Node2D"]
 script = ExtResource("1_4t76v")
+metadata/_edit_vertical_guides_ = [-315.0, 315.0, -45.0, 45.0]
+metadata/_edit_horizontal_guides_ = [-270.0, 270.0, -90.0, 90.0]
+
+[node name="TokenGrid" parent="." instance=ExtResource("2_lf31o")]

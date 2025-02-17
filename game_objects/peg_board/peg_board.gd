@@ -71,12 +71,12 @@ func setup_connections(rows: Array):
 					line2d.add_to_group("debug_lines")
 					add_child(line2d)
 
-func calculate_size(num_pegs: int, num_rows: int, peg_spacing: int) -> Vector2i:
+func calculate_size(num_pegs: int, num_rows: int, peg_spacing: int) -> Vector2:
 	var width = (num_pegs - 1) * peg_spacing
 	var height = (num_rows - 1) * peg_spacing
-	return Vector2i(width, height)
+	return Vector2(width, height)
 
-func get_size() -> Vector2i:
+func get_size() -> Vector2:
 	return calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
 
 func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
@@ -142,4 +142,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var peg_board_size: Vector2i = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
+	var peg_board_size: Vector2 = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)

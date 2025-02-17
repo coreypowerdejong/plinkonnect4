@@ -3,11 +3,11 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var screen_size = get_viewport().size
+	var screen_size = Vector2(get_viewport().size)
 	var peg_board_size = $peg_board.get_size()
 	var token_board_size = $TokenBoard.get_size()
-	$peg_board.global_position = (screen_size - peg_board_size) / 2 + Vector2i(0, -100)
-	$TokenBoard.global_position = (screen_size - token_board_size) / 2 + Vector2i(0, 130)
+	$peg_board.global_position = (screen_size - peg_board_size) / 2 + Vector2(0, -300)
+	$TokenBoard.global_position = $peg_board.global_position + Vector2(0, token_board_size.y + 100)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

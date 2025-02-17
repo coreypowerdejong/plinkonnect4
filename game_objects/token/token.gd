@@ -3,9 +3,9 @@ extends Sprite2D
 var type: int = 0:
 	set(value):
 		if value == 0:
-			$ColorRect.color = Color("RED")
+			$Sprite2D/ColorRect.color = Color("RED")
 		else:
-			$ColorRect.color = Color("BLUE")
+			$Sprite2D/ColorRect.color = Color("BLUE")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

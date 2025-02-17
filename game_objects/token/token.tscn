@@ -1,20 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgn4e3irixiio"]
+[gd_scene load_steps=4 format=3 uid="uid://dgn4e3irixiio"]
 
 [ext_resource type="Script" path="res://game_objects/token/token.gd" id="1_8n4l8"]
+
+[sub_resource type="Gradient" id="Gradient_uym4a"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.620818, 0.67658)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ewnv6"]
+gradient = SubResource("Gradient_uym4a")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Token" type="Sprite2D"]
 script = ExtResource("1_8n4l8")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(0, -3.8147e-06)
+scale = Vector2(1.4375, 1.4375)
+texture = SubResource("GradientTexture2D_ewnv6")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -63.0
+offset_top = -63.0
+offset_right = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 0, 1)

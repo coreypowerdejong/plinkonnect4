@@ -1,5 +1,7 @@
 extends Node2D
 
+var active_player: bool = false
+@onready var UI = $UI
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,3 +19,9 @@ func _process(delta):
 
 func _on_peg_board_token_inserted(slot_id):
 	$TokenBoard.insert_token(slot_id)
+
+
+func _on_turn_change(turn):
+	active_player = turn
+	var player_str = "Blue" if active_player else "Red"
+	UI.set_turn_label(player_str)

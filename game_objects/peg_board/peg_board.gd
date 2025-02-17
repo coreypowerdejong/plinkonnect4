@@ -120,7 +120,6 @@ func _on_token_inserted(slot_id: int) -> int:
 			fall_line.default_color = Color("ORANGE")
 			add_child(fall_line)
 	
-	print("Token leaving from " + str(fall_path[-1].idx))
 	token_inserted.emit(fall_path[-1].idx)
 	return fall_path[-1].idx
 

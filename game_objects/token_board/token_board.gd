@@ -1,5 +1,7 @@
 extends Node2D
 
+signal turn_change(turn: bool)
+
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
 const TOKEN = preload("res://game_objects/token/token.tscn")
 const TOKEN_SPACING = 90
@@ -7,7 +9,10 @@ const BOARD_WIDTH = 7
 const BOARD_HEIGHT = 6
 var board_pixel_height: int
 var board = []
-var turn: bool = false
+var turn: bool = false:
+	set(value):
+		turn_change.emit(value)
+		turn = value
 
 
 func setup_board(width: int, height: int) -> Array:

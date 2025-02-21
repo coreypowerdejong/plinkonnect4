@@ -21,8 +21,35 @@ func setup_board(width: int, height: int) -> Array:
 		board.append([])
 	return board
 
-func add_token(board: Array, position: int, type: int):
-	board[position].append(type)
+func add_token(board: Array, position: int, type: int, height: int, width: int) -> int:
+	var modified_position: int = position
+	# if column is full
+	if len(board[position]) == height:
+		var cursor = position
+		var options = []
+		var side_valid = true
+		# scan for open column on right side
+		if position != width - 1:
+			while len(board[cursor]) == height:
+				cursor += 1
+				if cursor == width:
+					side_valid = false
+			if side_valid:
+				options.append(cursor)
+		cursor = position
+		side_valid = true
+		# scan for open column on left side
+		if position != 0:
+			while len(board[cursor]) == height:
+				cursor -= 1
+				if cursor < 0:
+					side_valid = false
+			if side_valid:
+				options.append(cursor)
+		modified_position = options.pick_random()
+	
+	board[modified_position].append(type)
+	return modified_position
 
 func create_token(board, slot: int):
 	var t = TOKEN.instantiate()
@@ -44,8 +71,8 @@ func get_size():
 	return calculate_size(BOARD_WIDTH, BOARD_HEIGHT, TOKEN_SPACING)
 
 func insert_token(slot_id):
-	add_token(board, slot_id, 0)
-	create_token(board, slot_id)
+	var final_slot = add_token(board, slot_id, 0, BOARD_HEIGHT, BOARD_WIDTH)
+	create_token(board, final_slot)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

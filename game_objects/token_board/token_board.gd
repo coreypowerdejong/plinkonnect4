@@ -1,6 +1,7 @@
 extends Node2D
 
 signal turn_change(turn: bool)
+signal board_full
 
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
 const TOKEN = preload("res://game_objects/token/token.tscn")
@@ -9,6 +10,7 @@ const BOARD_WIDTH = 7
 const BOARD_HEIGHT = 6
 var board_pixel_height: int
 var board = []
+var full_columns = []
 var turn: bool = false:
 	set(value):
 		turn_change.emit(value)
@@ -16,9 +18,11 @@ var turn: bool = false:
 
 
 func setup_board(width: int, height: int) -> Array:
+	full_columns = []
 	var board = []
 	for i in width:
 		board.append([])
+		full_columns.append(false)
 	return board
 
 func add_token(board: Array, position: int, type: int, height: int, width: int) -> int:
@@ -73,6 +77,13 @@ func get_size():
 func insert_token(slot_id):
 	var final_slot = add_token(board, slot_id, 0, BOARD_HEIGHT, BOARD_WIDTH)
 	create_token(board, final_slot)
+	if len(board[final_slot]) == BOARD_HEIGHT:
+		full_columns[final_slot] = true
+
+	for column in full_columns:
+		if column == false:
+			return
+	board_full.emit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

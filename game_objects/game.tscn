@@ -15,4 +15,5 @@ script = ExtResource("1_5g54d")
 [node name="UI" parent="." instance=ExtResource("4_vjlic")]
 
 [connection signal="token_inserted" from="peg_board" to="." method="_on_peg_board_token_inserted"]
+[connection signal="board_full" from="TokenBoard" to="." method="_on_board_full"]
 [connection signal="turn_change" from="TokenBoard" to="." method="_on_turn_change"]

@@ -25,3 +25,7 @@ func _on_turn_change(turn):
 	active_player = turn
 	var player_str = "Blue" if active_player else "Red"
 	UI.set_turn_label(player_str)
+
+
+func _on_board_full():
+	print("Board full!")

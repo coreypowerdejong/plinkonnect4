@@ -14,7 +14,8 @@ signal token_inserted(slot_id: int)
 
 func setup_row(length: int, spacing: int, level: int, locked: bool = false, secret: bool = false) -> Array:
 	var row = []
-	var offset_mag = spacing / 2
+	@warning_ignore("integer_division")
+	var offset_mag: int = spacing / 2
 	var offset = offset_mag if length % 2 == 0 else 0
 	for n in length:
 		var peg = PEG.instantiate()
@@ -28,40 +29,40 @@ func setup_row(length: int, spacing: int, level: int, locked: bool = false, secr
 		add_child(peg)
 	return row
 
-func find_peg_below(rows: Array, i: int, j: int):
+func find_peg_below(rows_arr: Array, i: int, j: int):
 	var lookahead = 0
-	while not rows[i+1+lookahead][j].enabled:
+	while not rows_arr[i+1+lookahead][j].enabled:
 		lookahead += 2
-	return rows[i+1+lookahead][j]
+	return rows_arr[i+1+lookahead][j]
 	
-func setup_connections(rows: Array):
-	for i in len(rows) - 1:
+func setup_connections(rows_arr: Array):
+	for i in len(rows_arr) - 1:
 		if i % 2 == 0:
-			for j in len(rows[i]):
-				rows[i][j].connections = []
-				if not rows[i][j].enabled:
+			for j in len(rows_arr[i]):
+				rows_arr[i][j].connections = []
+				if not rows_arr[i][j].enabled:
 					continue
-				if (j < len(rows[i+1])):
-					var next_peg = find_peg_below(rows, i, j)
-					rows[i][j].connections.append(next_peg)
+				if (j < len(rows_arr[i+1])):
+					var next_peg = find_peg_below(rows_arr, i, j)
+					rows_arr[i][j].connections.append(next_peg)
 				if (j > 0):
-					var next_peg = find_peg_below(rows, i, j-1)
-					rows[i][j].connections.append(next_peg)
+					var next_peg = find_peg_below(rows_arr, i, j-1)
+					rows_arr[i][j].connections.append(next_peg)
 		else:
-			for j in len(rows[i]):
-				rows[i][j].connections = []
-				if not rows[i][j].enabled:
+			for j in len(rows_arr[i]):
+				rows_arr[i][j].connections = []
+				if not rows_arr[i][j].enabled:
 					continue
-				if (j < len(rows[i+1])):
-					var next_peg = find_peg_below(rows, i, j+1)
-					rows[i][j].connections.append(next_peg)
-				var next_peg = find_peg_below(rows, i, j)
-				rows[i][j].connections.append(next_peg)
+				if (j < len(rows_arr[i+1])):
+					var next_peg = find_peg_below(rows_arr, i, j+1)
+					rows_arr[i][j].connections.append(next_peg)
+				var next_peg = find_peg_below(rows_arr, i, j)
+				rows_arr[i][j].connections.append(next_peg)
 		if OS.is_debug_build():
-			for j in len(rows[i]):
-				for connection in rows[i][j].connections:
+			for j in len(rows_arr[i]):
+				for connection in rows_arr[i][j].connections:
 					var line2d = Line2D.new()
-					line2d.add_point(rows[i][j].position + Vector2(0, 25))
+					line2d.add_point(rows_arr[i][j].position + Vector2(0, 25))
 					line2d.add_point(connection.position)
 					line2d.width = 5
 					if connection.secret:
@@ -137,8 +138,14 @@ func _ready():
 		rows.append(setup_row(PEGS_LENGTH - (i % 2), PEG_SPACING, i, locked, secret))
 	setup_connections(rows)
 	slots = create_token_slots(PEGS_LENGTH, PEG_SPACING)
+	
+	# screen resize signal
+	get_tree().get_root().size_changed.connect(_resize)
 
-
+func _resize():
+	pass
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var peg_board_size: Vector2 = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
+func _process(_delta):
+	#var peg_board_size: Vector2 = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
+	pass

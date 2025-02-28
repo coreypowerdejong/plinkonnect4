@@ -12,7 +12,7 @@ func calculate_size(num_slots: int, num_rows: int, token_spacing: int) -> Vector
 	var height = (num_rows - 1) * token_spacing
 	return Vector2(width, height)
 
-func generate_grid(width: int, height: int, spacing: int):
+func generate_grid(width: int, height: int):
 	for i in width:
 		for j in height:
 			var sprite = Sprite2D.new()
@@ -23,10 +23,11 @@ func generate_grid(width: int, height: int, spacing: int):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	@warning_ignore("narrowing_conversion")
 	board_pixel_height = calculate_size(BOARD_WIDTH, BOARD_HEIGHT, TOKEN_SPACING).y
-	generate_grid(BOARD_WIDTH, BOARD_HEIGHT, TOKEN_SPACING)
+	generate_grid(BOARD_WIDTH, BOARD_HEIGHT)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

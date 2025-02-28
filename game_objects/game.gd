@@ -10,10 +10,11 @@ func _ready():
 	var token_board_size = $TokenBoard.get_size()
 	$peg_board.global_position = (screen_size - peg_board_size) / 2 + Vector2(0, -300)
 	$TokenBoard.global_position = $peg_board.global_position + Vector2(0, token_board_size.y + 100)
+	UI.start_game()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 
@@ -28,4 +29,4 @@ func _on_turn_change(turn):
 
 
 func _on_board_full():
-	print("Board full!")
+	UI.game_over()

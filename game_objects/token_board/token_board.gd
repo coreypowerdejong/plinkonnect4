@@ -17,45 +17,33 @@ var turn: bool = false:
 		turn = value
 
 
-func setup_board(width: int, height: int) -> Array:
+func setup_board(width: int) -> Array:
 	full_columns = []
-	var board = []
+	board = []
 	for i in width:
 		board.append([])
 		full_columns.append(false)
 	return board
 
-func add_token(board: Array, position: int, type: int, height: int, width: int) -> int:
-	var modified_position: int = position
-	# if column is full
-	if len(board[position]) == height:
-		var cursor = position
-		var options = []
-		var side_valid = true
-		# scan for open column on right side
-		if position != width - 1:
-			while len(board[cursor]) == height:
-				cursor += 1
-				if cursor == width:
-					side_valid = false
-			if side_valid:
-				options.append(cursor)
-		cursor = position
-		side_valid = true
-		# scan for open column on left side
-		if position != 0:
-			while len(board[cursor]) == height:
-				cursor -= 1
-				if cursor < 0:
-					side_valid = false
-			if side_valid:
-				options.append(cursor)
-		modified_position = options.pick_random()
-	
-	board[modified_position].append(type)
-	return modified_position
+func add_token(token_position: int, type: int, height: int) -> bool:
+	# return true on successful token add
+	# return false if column is full
 
-func create_token(board, slot: int):
+	# if column is available
+	if not len(board[token_position]) == height:
+		board[token_position].append(type)
+		
+		# check if full after adding token
+		if len(board[token_position]) == height:
+			full_columns[token_position] = true
+		
+		# return successfully added token
+		return true
+	
+	# no early return, token not added - already full column
+	return false
+
+func create_token(slot: int):
 	var t = TOKEN.instantiate()
 	var j = len(board[slot])
 	t.position = Vector2(slot*TOKEN_SPACING, board_pixel_height - (j+1)*TOKEN_SPACING)
@@ -75,22 +63,23 @@ func get_size():
 	return calculate_size(BOARD_WIDTH, BOARD_HEIGHT, TOKEN_SPACING)
 
 func insert_token(slot_id):
-	var final_slot = add_token(board, slot_id, 0, BOARD_HEIGHT, BOARD_WIDTH)
-	create_token(board, final_slot)
-	if len(board[final_slot]) == BOARD_HEIGHT:
-		full_columns[final_slot] = true
-
+	var success = add_token(slot_id, 0, BOARD_HEIGHT)
+	if success:
+		create_token(slot_id)
+	
+	# early return if board not full
 	for column in full_columns:
 		if column == false:
 			return
+	# if made it here, board is full
 	board_full.emit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	board = setup_board(BOARD_WIDTH, BOARD_HEIGHT)
+	board = setup_board(BOARD_WIDTH)
 	board_pixel_height = BOARD_HEIGHT * TOKEN_SPACING
 	$TokenGrid.global_position = global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

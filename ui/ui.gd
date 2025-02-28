@@ -8,5 +8,15 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
+
+func start_game():
+	$game_over.hide()
+	
+func game_over():
+	$game_over.show()
+
+
+func _on_game_over_pressed():
+	game_over()

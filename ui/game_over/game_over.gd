@@ -1,11 +1,6 @@
-extends Sprite2D
+extends Control
 
-var type: int = 0:
-	set(value):
-		if value == 0:
-			$Sprite2D/ColorRect.color = Color("RED")
-		else:
-			$Sprite2D/ColorRect.color = Color("BLUE")
+signal game_over_pressed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,3 +10,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+
+
+func _on_button_pressed():
+	game_over_pressed.emit()

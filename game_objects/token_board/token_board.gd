@@ -51,7 +51,6 @@ func create_token(slot: int):
 		t.type = 1
 	else:
 		t.type = 0
-	turn = !turn
 	add_child(t)
 
 func calculate_size(num_slots: int, num_rows: int, token_spacing: int) -> Vector2:
@@ -66,7 +65,7 @@ func insert_token(slot_id):
 	var success = add_token(slot_id, 0, BOARD_HEIGHT)
 	if success:
 		create_token(slot_id)
-	
+	turn = !turn
 	# early return if board not full
 	for column in full_columns:
 		if column == false:

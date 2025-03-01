@@ -52,6 +52,7 @@ func create_token(slot: int):
 	else:
 		t.type = 0
 	add_child(t)
+	t.add_to_group("tokens")
 
 func calculate_size(num_slots: int, num_rows: int, token_spacing: int) -> Vector2:
 	var width = (num_slots - 1) * token_spacing
@@ -61,6 +62,13 @@ func calculate_size(num_slots: int, num_rows: int, token_spacing: int) -> Vector
 func get_size():
 	return calculate_size(BOARD_WIDTH, BOARD_HEIGHT, TOKEN_SPACING)
 
+func reset_tokens():
+	setup_board(BOARD_WIDTH)
+	get_tree().call_group("tokens", "queue_free")
+	
+func check_win(token_position: Vector2) -> bool:
+	return false
+	
 func insert_token(slot_id):
 	var success = add_token(slot_id, 0, BOARD_HEIGHT)
 	if success:

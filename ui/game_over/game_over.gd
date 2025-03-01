@@ -1,6 +1,6 @@
 extends Control
 
-signal game_over_pressed
+signal new_game_pressed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,5 +12,5 @@ func _process(_delta):
 	pass
 
 
-func _on_button_pressed():
-	game_over_pressed.emit()
+func _on_new_game_pressed():
+	new_game_pressed.emit()

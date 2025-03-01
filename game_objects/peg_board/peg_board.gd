@@ -27,6 +27,8 @@ func setup_row(length: int, spacing: int, level: int, locked: bool = false, secr
 		peg.idx = n
 		peg.secret = secret
 		add_child(peg)
+		
+		peg.add_to_group("pegs")
 	return row
 
 func find_peg_below(rows_arr: Array, i: int, j: int):
@@ -91,6 +93,9 @@ func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
 		add_child(slot)
 	return slots
 
+func reset_pegs():
+	get_tree().call_group("pegs", "reset")
+
 
 func _on_peg_toggled(state: bool):
 	for child in get_children():
@@ -119,7 +124,7 @@ func _on_token_inserted(slot_id: int) -> int:
 			fall_line.add_point(peg.position)
 			fall_line.width = 5
 			fall_line.default_color = Color("ORANGE")
-			add_child(fall_line)
+		add_child(fall_line)
 	
 	token_inserted.emit(fall_path[-1].idx)
 	return fall_path[-1].idx

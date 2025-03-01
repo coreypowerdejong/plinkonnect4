@@ -13,7 +13,11 @@ var secret: bool = false:
 
 func set_color(color: Color = Color("WHITE")):
 	$ColorRect.color = color
-	
+
+func reset():
+	if !enabled:
+		$CheckButton.set_pressed(true)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CheckButton.disabled = locked

@@ -6,7 +6,7 @@
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1i0n1")
 
-[node name="Label" type="Label" parent="."]
+[node name="PlayerLabel" type="Label" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -21,4 +21,30 @@ text = "Red's turn!"
 
 [node name="game_over" parent="." instance=ExtResource("2_0v20k")]
 
-[connection signal="game_over_pressed" from="game_over" to="." method="_on_game_over_pressed"]
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="EndGame" type="Button" parent="Debug"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "end game"
+
+[connection signal="new_game_pressed" from="game_over" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Debug/EndGame" to="." method="game_over"]

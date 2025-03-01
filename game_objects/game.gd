@@ -30,3 +30,9 @@ func _on_turn_change(turn):
 
 func _on_board_full():
 	UI.game_over()
+
+
+func _on_ui_start_game():
+	$peg_board.reset_pegs()
+	$TokenBoard.reset_tokens()
+	pass # Replace with function body.

@@ -55,10 +55,11 @@ func setup_connections(rows_arr: Array):
 				rows_arr[i][j].connections = []
 				if not rows_arr[i][j].enabled:
 					continue
+				var next_peg
 				if (j < len(rows_arr[i+1])):
-					var next_peg = find_peg_below(rows_arr, i, j+1)
+					next_peg = find_peg_below(rows_arr, i, j+1)
 					rows_arr[i][j].connections.append(next_peg)
-				var next_peg = find_peg_below(rows_arr, i, j)
+				next_peg = find_peg_below(rows_arr, i, j)
 				rows_arr[i][j].connections.append(next_peg)
 		if OS.is_debug_build():
 			for j in len(rows_arr[i]):
@@ -83,7 +84,7 @@ func get_size() -> Vector2:
 	return calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
 
 func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
-	var slots = []
+	slots = []
 	for n in num_slots:
 		var slot = TOKEN_SLOT.instantiate()
 		slot.global_position = Vector2(global_position.x + n * slot_spacing, global_position.y - 30)
@@ -97,7 +98,7 @@ func reset_pegs():
 	get_tree().call_group("pegs", "reset")
 
 
-func _on_peg_toggled(state: bool):
+func _on_peg_toggled(_state: bool):
 	for child in get_children():
 		if child is Line2D:
 			child.queue_free()

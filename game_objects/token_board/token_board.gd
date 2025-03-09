@@ -2,6 +2,7 @@ extends Node2D
 
 signal turn_change(turn: bool)
 signal board_full
+signal win_detected(victor: bool)
 
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
 const TOKEN = preload("res://game_objects/token/token.tscn")
@@ -147,7 +148,9 @@ func insert_token(slot_id):
 		var token_position = Vector2(slot_id, column_counts[slot_id])
 		var small_board = get_subsection_from_centre(token_position, 3)
 		var win = check_win(small_board)
-		print(win)
+		if win:
+			win_detected.emit(turn)
+			return
 	turn = !turn
 	# early return if board not full
 	for column in full_columns:

@@ -17,4 +17,5 @@ script = ExtResource("1_5g54d")
 [connection signal="token_inserted" from="peg_board" to="." method="_on_peg_board_token_inserted"]
 [connection signal="board_full" from="TokenBoard" to="." method="_on_board_full"]
 [connection signal="turn_change" from="TokenBoard" to="." method="_on_turn_change"]
+[connection signal="win_detected" from="TokenBoard" to="." method="_on_win_detected"]
 [connection signal="start_game_signal" from="UI" to="." method="_on_ui_start_game"]

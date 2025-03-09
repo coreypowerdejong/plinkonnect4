@@ -4,6 +4,7 @@ signal start_game_signal
 
 func set_turn_label(player: String):
 	$PlayerLabel.text = player.capitalize() + "'s turn!"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -16,13 +17,10 @@ func _process(_delta):
 func start_game():
 	$game_over.hide()
 	start_game_signal.emit()
-	
-func game_over():
+
+func game_over(win: bool = false, winner: String = "Nobody"):
+	$game_over.set_winner(winner)
 	$game_over.show()
-
-
-func _on_game_over_pressed():
-	game_over()
 
 
 func _on_new_game_pressed():

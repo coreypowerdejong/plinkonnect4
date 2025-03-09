@@ -1,6 +1,10 @@
 extends Node2D
 
-var active_player: bool = false
+var player_str: String
+var active_player: bool = false:
+	set(value):
+		player_str = "Blue" if value else "Red"
+
 @onready var UI = $UI
 
 # Called when the node enters the scene tree for the first time.
@@ -24,12 +28,14 @@ func _on_peg_board_token_inserted(slot_id):
 
 func _on_turn_change(turn):
 	active_player = turn
-	var player_str = "Blue" if active_player else "Red"
 	UI.set_turn_label(player_str)
 
 
 func _on_board_full():
 	UI.game_over()
+
+func _on_win_detected(victor):
+	$UI.game_over(true, player_str)
 
 
 func _on_ui_start_game():

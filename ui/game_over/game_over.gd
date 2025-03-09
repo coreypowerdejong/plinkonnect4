@@ -14,3 +14,6 @@ func _process(_delta):
 
 func _on_new_game_pressed():
 	new_game_pressed.emit()
+
+func set_winner(winner: String = "Unknown"):
+	$VBoxContainer/WinnerLabel.text = winner + " wins!"

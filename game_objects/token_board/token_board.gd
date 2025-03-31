@@ -62,7 +62,6 @@ func create_token(slot: int):
 	else:
 		t.type = 0
 	add_child(t)
-	t.hide()
 	t.flash_animation()
 	t.add_to_group("tokens")
 

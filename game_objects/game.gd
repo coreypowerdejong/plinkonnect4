@@ -55,3 +55,11 @@ func _on_ui_start_game():
 	$TokenBoard.reset_tokens()
 	locked = false
 	pass # Replace with function body.
+
+
+func _on_ui_clear_pegs():
+	$peg_board.clear_pegs()
+
+
+func _on_ui_set_pegs():
+	$peg_board.reset_pegs()

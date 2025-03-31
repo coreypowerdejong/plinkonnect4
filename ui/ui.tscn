@@ -33,18 +33,31 @@ offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="EndGame" type="Button" parent="Debug"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Debug"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -85.0
-offset_top = -31.0
+offset_left = -89.0
+offset_top = -101.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="EndGame" type="Button" parent="Debug/VBoxContainer"]
+layout_mode = 2
 text = "end game"
 
+[node name="SetPegs" type="Button" parent="Debug/VBoxContainer"]
+layout_mode = 2
+text = "Set pegs"
+
+[node name="ClearPegs" type="Button" parent="Debug/VBoxContainer"]
+layout_mode = 2
+text = "Clear pegs"
+
 [connection signal="new_game_pressed" from="game_over" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Debug/EndGame" to="." method="game_over"]
+[connection signal="pressed" from="Debug/VBoxContainer/EndGame" to="." method="game_over"]
+[connection signal="pressed" from="Debug/VBoxContainer/SetPegs" to="." method="_on_set_pegs_pressed"]
+[connection signal="pressed" from="Debug/VBoxContainer/ClearPegs" to="." method="_on_clear_pegs_pressed"]

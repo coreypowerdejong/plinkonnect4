@@ -34,4 +34,6 @@ texture = SubResource("GradientTexture1D_rpr3l")
 [connection signal="board_full" from="TokenBoard" to="." method="_on_board_full"]
 [connection signal="turn_change" from="TokenBoard" to="." method="_on_turn_change"]
 [connection signal="win_detected" from="TokenBoard" to="." method="_on_win_detected"]
+[connection signal="clear_pegs" from="UI" to="." method="_on_ui_clear_pegs"]
+[connection signal="set_pegs" from="UI" to="." method="_on_ui_set_pegs"]
 [connection signal="start_game_signal" from="UI" to="." method="_on_ui_start_game"]

@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 signal start_game_signal
+signal set_pegs
+signal clear_pegs
 
 func set_turn_label(player: String):
 	$PlayerLabel.text = player.capitalize() + "'s turn!"
@@ -25,3 +27,11 @@ func game_over(win: bool = false, winner: String = "Nobody"):
 
 func _on_new_game_pressed():
 	start_game()
+
+
+func _on_set_pegs_pressed():
+	set_pegs.emit()
+
+
+func _on_clear_pegs_pressed():
+	clear_pegs.emit()

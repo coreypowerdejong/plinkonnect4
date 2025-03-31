@@ -8,7 +8,7 @@ var type: int = 0:
 			$Sprite2D/ColorRect.color = Color("DODGER_BLUE")
 signal landed
 signal finished
-const HEIGHT_OFFSET = Vector2(0, 10)
+const HEIGHT_OFFSET = Vector2(0, 20)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,7 +31,7 @@ func bounce_animation(path: Array):
 	var current_node = path[0]
 	var prev_node
 	var tween = get_tree().create_tween()
-	global_position = current_node.global_position
+	global_position = current_node.global_position - HEIGHT_OFFSET
 	var position_tracker: Vector2 = position
 	var direction: int = 1
 	scale = Vector2.ONE * 0.5
@@ -44,7 +44,7 @@ func bounce_animation(path: Array):
 		direction = sign(current_node.position.x - prev_node.position.x)
 		position_tracker += Vector2(direction * 22.5, -22.5)
 		tween_to_position(tween, position_tracker, 0.35, false)
-		position_tracker = current_node.position
+		position_tracker = current_node.position - HEIGHT_OFFSET
 		tween_to_position(tween, position_tracker, 0.75)
 
 	tween.tween_callback(landed.emit)

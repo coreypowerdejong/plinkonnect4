@@ -105,6 +105,9 @@ func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
 func reset_pegs():
 	get_tree().call_group("pegs", "reset")
 
+func clear_pegs():
+	get_tree().call_group("pegs", "clear")
+
 func lock_slots():
 	for slot in slots:
 		slot.lock()

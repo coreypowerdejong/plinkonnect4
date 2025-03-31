@@ -18,6 +18,10 @@ func reset():
 	if !enabled:
 		$CheckButton.set_pressed(true)
 
+func clear():
+	if enabled and !locked and !secret:
+		$CheckButton.set_pressed(false)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CheckButton.disabled = locked

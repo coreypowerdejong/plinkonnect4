@@ -62,6 +62,8 @@ func create_token(slot: int):
 	else:
 		t.type = 0
 	add_child(t)
+	t.hide()
+	t.flash_animation()
 	t.add_to_group("tokens")
 
 func calculate_size(num_slots: int, num_rows: int, token_spacing: int) -> Vector2:

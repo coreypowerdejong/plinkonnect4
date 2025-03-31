@@ -16,3 +16,9 @@ func _process(_delta):
 
 func _on_button_pressed():
 	activated.emit(id)
+
+func lock():
+	$Button.disabled = true
+
+func unlock():
+	$Button.disabled = false

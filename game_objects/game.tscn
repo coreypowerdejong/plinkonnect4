@@ -1,12 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4l51ars4vutf"]
+[gd_scene load_steps=7 format=3 uid="uid://d4l51ars4vutf"]
 
 [ext_resource type="Script" path="res://game_objects/game.gd" id="1_5g54d"]
 [ext_resource type="PackedScene" uid="uid://1ltf3eh8n06s" path="res://game_objects/peg_board/peg_board.tscn" id="1_ccpy7"]
 [ext_resource type="PackedScene" uid="uid://jhb3vk2hscip" path="res://game_objects/token_board/token_board.tscn" id="2_12akp"]
 [ext_resource type="PackedScene" uid="uid://drsh6dg8dpavn" path="res://ui/ui.tscn" id="4_vjlic"]
 
+[sub_resource type="Gradient" id="Gradient_rpovm"]
+colors = PackedColorArray(0, 0.894118, 0, 1, 0, 0.717647, 0.545098, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rpr3l"]
+gradient = SubResource("Gradient_rpovm")
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5g54d")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = -23.0
+offset_top = 1320.0
+offset_right = 1330.0
+offset_bottom = 2645.0
+rotation = -1.5708
+texture = SubResource("GradientTexture1D_rpr3l")
 
 [node name="peg_board" parent="." instance=ExtResource("1_ccpy7")]
 
@@ -14,7 +28,9 @@ script = ExtResource("1_5g54d")
 
 [node name="UI" parent="." instance=ExtResource("4_vjlic")]
 
+[connection signal="token_finished" from="peg_board" to="." method="_on_peg_board_token_finished"]
 [connection signal="token_inserted" from="peg_board" to="." method="_on_peg_board_token_inserted"]
+[connection signal="token_landed" from="peg_board" to="." method="_on_peg_board_token_landed"]
 [connection signal="board_full" from="TokenBoard" to="." method="_on_board_full"]
 [connection signal="turn_change" from="TokenBoard" to="." method="_on_turn_change"]
 [connection signal="win_detected" from="TokenBoard" to="." method="_on_win_detected"]

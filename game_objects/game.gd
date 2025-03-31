@@ -4,6 +4,8 @@ var player_str: String
 var active_player: bool = false:
 	set(value):
 		player_str = "Blue" if value else "Red"
+var current_slot: int
+var locked: bool = false
 
 @onready var UI = $UI
 
@@ -23,12 +25,22 @@ func _process(_delta):
 
 
 func _on_peg_board_token_inserted(slot_id):
-	$TokenBoard.insert_token(slot_id)
+	current_slot = slot_id
+	locked = true
+	$peg_board.lock_slots()
 
+func _on_peg_board_token_landed():
+	$TokenBoard.insert_token(current_slot)
+	
+func _on_peg_board_token_finished():
+	locked = false
+	$peg_board.unlock_slots()
 
 func _on_turn_change(turn):
 	active_player = turn
 	UI.set_turn_label(player_str)
+	$peg_board.set_turn(turn)
+	$peg_board.unlock_slots()
 
 
 func _on_board_full():
@@ -41,4 +53,5 @@ func _on_win_detected(victor):
 func _on_ui_start_game():
 	$peg_board.reset_pegs()
 	$TokenBoard.reset_tokens()
+	locked = false
 	pass # Replace with function body.

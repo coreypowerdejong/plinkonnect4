@@ -4,13 +4,21 @@ var rows = []
 var slots = []
 var fall_path = []
 var fall_line = Line2D.new()
+var turn: bool
 const PEG = preload("res://game_objects/peg/peg.tscn")
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
+const TOKEN = preload("res://game_objects/token/token.tscn")
 const PEGS_LENGTH = 7
 const PEG_SPACING = 90
 const NUM_PEG_ROWS = 5
+const DEBUG = false
 
 signal token_inserted(slot_id: int)
+signal token_landed
+signal token_finished
+
+func set_turn(player_turn: bool):
+	turn = player_turn
 
 func setup_row(length: int, spacing: int, level: int, locked: bool = false, secret: bool = false) -> Array:
 	var row = []
@@ -61,7 +69,7 @@ func setup_connections(rows_arr: Array):
 					rows_arr[i][j].connections.append(next_peg)
 				next_peg = find_peg_below(rows_arr, i, j)
 				rows_arr[i][j].connections.append(next_peg)
-		if OS.is_debug_build():
+		if DEBUG:
 			for j in len(rows_arr[i]):
 				for connection in rows_arr[i][j].connections:
 					var line2d = Line2D.new()
@@ -97,6 +105,13 @@ func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
 func reset_pegs():
 	get_tree().call_group("pegs", "reset")
 
+func lock_slots():
+	for slot in slots:
+		slot.lock()
+
+func unlock_slots():
+	for slot in slots:
+		slot.unlock()
 
 func _on_peg_toggled(_state: bool):
 	for child in get_children():
@@ -117,7 +132,16 @@ func _on_token_inserted(slot_id: int) -> int:
 	for peg in fall_path:
 		peg.set_color(Color("CRIMSON"))
 	
-	if OS.is_debug_build():
+	# create falling token animation
+	var token = TOKEN.instantiate()
+	token.position = slots[slot_id].position
+	add_child(token)
+	token.type = int(turn)
+	token.connect("landed", _on_token_landed)
+	token.connect("finished", _on_token_finished)
+	token.bounce_animation(fall_path)
+	
+	if DEBUG:
 		if is_instance_valid(fall_line):
 			fall_line.queue_free()
 		fall_line = Line2D.new()
@@ -147,6 +171,12 @@ func _ready():
 	
 	# screen resize signal
 	get_tree().get_root().size_changed.connect(_resize)
+
+func _on_token_landed():
+	token_landed.emit()
+
+func _on_token_finished():
+	token_finished.emit()
 
 func _resize():
 	pass

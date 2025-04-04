@@ -63,3 +63,19 @@ func _on_ui_clear_pegs():
 
 func _on_ui_set_pegs():
 	$peg_board.reset_pegs()
+
+
+func _on_peg_board_slot_mouse_entered(id):
+	var total = $FallDistribution.count_paths(
+		$peg_board.find_peg_below($peg_board.rows, -1, id))
+
+	var endpoints = $FallDistribution.get_endpoints()
+	for p in endpoints:
+		$peg_board.fall_dist_labels[p].set_percentage(endpoints[p], total)
+		
+
+
+func _on_peg_board_slot_mouse_exited(id):
+	$FallDistribution.clear_endpoints()
+	for p in $peg_board.fall_dist_labels:
+		p.hide()

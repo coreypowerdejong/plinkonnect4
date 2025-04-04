@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4l51ars4vutf"]
+[gd_scene load_steps=8 format=3 uid="uid://d4l51ars4vutf"]
 
 [ext_resource type="Script" path="res://game_objects/game.gd" id="1_5g54d"]
 [ext_resource type="PackedScene" uid="uid://1ltf3eh8n06s" path="res://game_objects/peg_board/peg_board.tscn" id="1_ccpy7"]
 [ext_resource type="PackedScene" uid="uid://jhb3vk2hscip" path="res://game_objects/token_board/token_board.tscn" id="2_12akp"]
+[ext_resource type="PackedScene" uid="uid://clfvx5hkku4xr" path="res://game_objects/fall_distribution/fall_distribution.tscn" id="4_dqyts"]
 [ext_resource type="PackedScene" uid="uid://drsh6dg8dpavn" path="res://ui/ui.tscn" id="4_vjlic"]
 
 [sub_resource type="Gradient" id="Gradient_rpovm"]
@@ -26,8 +27,12 @@ texture = SubResource("GradientTexture1D_rpr3l")
 
 [node name="TokenBoard" parent="." instance=ExtResource("2_12akp")]
 
+[node name="FallDistribution" parent="." instance=ExtResource("4_dqyts")]
+
 [node name="UI" parent="." instance=ExtResource("4_vjlic")]
 
+[connection signal="slot_mouse_entered" from="peg_board" to="." method="_on_peg_board_slot_mouse_entered"]
+[connection signal="slot_mouse_exited" from="peg_board" to="." method="_on_peg_board_slot_mouse_exited"]
 [connection signal="token_finished" from="peg_board" to="." method="_on_peg_board_token_finished"]
 [connection signal="token_inserted" from="peg_board" to="." method="_on_peg_board_token_inserted"]
 [connection signal="token_landed" from="peg_board" to="." method="_on_peg_board_token_landed"]

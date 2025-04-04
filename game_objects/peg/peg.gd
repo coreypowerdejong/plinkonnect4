@@ -1,3 +1,4 @@
+class_name Peg
 extends Sprite2D
 
 signal peg_toggled(state: bool)
@@ -9,7 +10,7 @@ var idx: int
 var secret: bool = false:
 	set(value):
 		if value == true:
-			set_color(Color("DIM_GRAY"))
+			hide()
 
 func set_color(color: Color = Color("WHITE")):
 	$ColorRect.color = color

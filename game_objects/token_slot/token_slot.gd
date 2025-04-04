@@ -1,6 +1,8 @@
 extends Node2D
 
 signal activated(id: int)
+signal mouse_entered(id: int)
+signal mouse_exited(id: int)
 
 var id: int
 
@@ -22,3 +24,11 @@ func lock():
 
 func unlock():
 	$Button.disabled = false
+
+
+func _on_button_mouse_entered():
+	mouse_entered.emit(id)
+
+
+func _on_button_mouse_exited():
+	mouse_exited.emit(id)

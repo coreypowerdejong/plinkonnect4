@@ -2,12 +2,17 @@ extends Node2D
 
 var rows = []
 var slots = []
+var fall_dist_labels = []
 var fall_path = []
 var fall_line = Line2D.new()
 var turn: bool
+
 const PEG = preload("res://game_objects/peg/peg.tscn")
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
 const TOKEN = preload("res://game_objects/token/token.tscn")
+const FALL_DISTRIBUTION_LABEL = \
+preload("res://game_objects/fall_distribution/fall_distribution_label.tscn")
+
 const PEGS_LENGTH = 7
 const PEG_SPACING = 90
 const NUM_PEG_ROWS = 5
@@ -16,6 +21,8 @@ const DEBUG = false
 signal token_inserted(slot_id: int)
 signal token_landed
 signal token_finished
+signal slot_mouse_entered(id: int)
+signal slot_mouse_exited(id: int)
 
 func set_turn(player_turn: bool):
 	turn = player_turn
@@ -98,6 +105,8 @@ func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
 		slot.global_position = Vector2(global_position.x + n * slot_spacing, global_position.y - 30)
 		slot.id = n
 		slot.activated.connect(_on_token_inserted)
+		slot.mouse_entered.connect(_on_slot_mouse_entered)
+		slot.mouse_exited.connect(_on_slot_mouse_exited)
 		slots.append(slot)
 		add_child(slot)
 	return slots
@@ -172,6 +181,12 @@ func _ready():
 	setup_connections(rows)
 	slots = create_token_slots(PEGS_LENGTH, PEG_SPACING)
 	
+	for i in PEGS_LENGTH:
+		var new_label = FALL_DISTRIBUTION_LABEL.instantiate()
+		new_label.global_position = rows[NUM_PEG_ROWS - 1][i].global_position
+		fall_dist_labels.append(new_label)
+		add_child(new_label)
+		
 	# screen resize signal
 	get_tree().get_root().size_changed.connect(_resize)
 
@@ -188,3 +203,11 @@ func _resize():
 func _process(_delta):
 	#var peg_board_size: Vector2 = calculate_size(PEGS_LENGTH, NUM_PEG_ROWS, PEG_SPACING)
 	pass
+	
+func _on_slot_mouse_entered(id: int):
+	slot_mouse_entered.emit(id)
+
+
+func _on_slot_mouse_exited(id: int):
+	slot_mouse_exited.emit(id)
+	

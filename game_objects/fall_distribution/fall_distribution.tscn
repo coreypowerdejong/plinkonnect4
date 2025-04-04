@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://clfvx5hkku4xr"]
+
+[ext_resource type="Script" path="res://game_objects/fall_distribution/fall_distribution.gd" id="1_wmgu1"]
+
+[node name="FallDistribution" type="Node2D"]
+script = ExtResource("1_wmgu1")

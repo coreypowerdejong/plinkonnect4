@@ -26,6 +26,7 @@ func game_over(win: bool = false, winner: String = "Nobody"):
 
 
 func _on_new_game_pressed():
+	$StartMenu.hide()
 	start_game()
 
 

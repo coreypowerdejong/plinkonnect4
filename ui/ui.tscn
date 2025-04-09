@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://drsh6dg8dpavn"]
+[gd_scene load_steps=4 format=3 uid="uid://drsh6dg8dpavn"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_1i0n1"]
 [ext_resource type="PackedScene" uid="uid://6yf0mrbkcfep" path="res://ui/game_over/game_over.tscn" id="2_0v20k"]
+[ext_resource type="PackedScene" uid="uid://c6h3dgwemd01c" path="res://ui/start/start_menu.tscn" id="2_nbysb"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1i0n1")
@@ -18,6 +19,8 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Red's turn!"
+
+[node name="StartMenu" parent="." instance=ExtResource("2_nbysb")]
 
 [node name="game_over" parent="." instance=ExtResource("2_0v20k")]
 
@@ -57,6 +60,7 @@ text = "Set pegs"
 layout_mode = 2
 text = "Clear pegs"
 
+[connection signal="start_game" from="StartMenu" to="." method="_on_new_game_pressed"]
 [connection signal="new_game_pressed" from="game_over" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Debug/VBoxContainer/EndGame" to="." method="game_over"]
 [connection signal="pressed" from="Debug/VBoxContainer/SetPegs" to="." method="_on_set_pegs_pressed"]

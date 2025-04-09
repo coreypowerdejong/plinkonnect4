@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=1280
+window/size/resizable=false
+
+[gui]
+
+theme/custom_font="res://resources/kenvector_future.ttf"
+theme/size/resizable=true
 
 [rendering]
 

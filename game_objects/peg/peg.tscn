@@ -11,8 +11,14 @@ offset_bottom = 18.0
 rotation = 0.785398
 
 [node name="CheckButton" type="CheckButton" parent="."]
-offset_right = 44.0
-offset_bottom = 24.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -15.5
+offset_right = 41.8241
+offset_bottom = 60.251
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
 button_pressed = true
 
 [connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

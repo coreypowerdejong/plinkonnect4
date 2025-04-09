@@ -102,7 +102,7 @@ func create_token_slots(num_slots: int, slot_spacing: int) -> Array:
 	slots = []
 	for n in num_slots:
 		var slot = TOKEN_SLOT.instantiate()
-		slot.global_position = Vector2(global_position.x + n * slot_spacing, global_position.y - 30)
+		slot.global_position = Vector2(global_position.x + n * slot_spacing, global_position.y - 90)
 		slot.id = n
 		slot.activated.connect(_on_token_inserted)
 		slot.mouse_entered.connect(_on_slot_mouse_entered)
@@ -141,8 +141,8 @@ func _on_token_inserted(slot_id: int) -> int:
 		fall_path.append(current_peg)
 		current_peg = current_peg.connections.pick_random()
 	fall_path.append(current_peg)
-	for peg in fall_path:
-		peg.set_color(Color("CRIMSON"))
+	#for peg in fall_path:
+		#peg.set_color(Color("CRIMSON"))
 	
 	# create falling token animation
 	var token = TOKEN.instantiate()
@@ -183,7 +183,8 @@ func _ready():
 	
 	for i in PEGS_LENGTH:
 		var new_label = FALL_DISTRIBUTION_LABEL.instantiate()
-		new_label.global_position = rows[NUM_PEG_ROWS - 1][i].global_position
+		new_label.global_position = rows[NUM_PEG_ROWS - 1][i].global_position\
+		+ Vector2(0, 25)
 		fall_dist_labels.append(new_label)
 		add_child(new_label)
 		

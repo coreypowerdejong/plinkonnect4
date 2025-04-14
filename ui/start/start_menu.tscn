@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6h3dgwemd01c"]
+[gd_scene load_steps=4 format=3 uid="uid://c6h3dgwemd01c"]
 
 [ext_resource type="Script" path="res://ui/start/start_menu.gd" id="1_07t1n"]
 [ext_resource type="Theme" uid="uid://mbsg4xqnedxi" path="res://resources/kenneyUI-red.tres" id="1_y7b2y"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4npui"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -13,19 +15,31 @@ grow_vertical = 2
 theme = ExtResource("1_y7b2y")
 script = ExtResource("1_07t1n")
 
-[node name="StartGame" type="Button" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -15.5
-offset_right = 48.0
-offset_bottom = 15.5
+offset_left = -184.0
+offset_top = -70.0
+offset_right = 184.0
+offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="StartGame" type="Button" parent="VBoxContainer"]
+layout_mode = 2
 text = "Start Game"
 
-[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
+[node name="AllPegs" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 30
+text = "Start with all
+pegs enabled?"
+icon = SubResource("ViewportTexture_4npui")
+
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]

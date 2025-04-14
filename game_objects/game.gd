@@ -54,11 +54,16 @@ func _on_win_detected(victor):
 	$UI.game_over(true, player_str)
 
 
-func _on_ui_start_game():
+func _on_ui_start_game(all_pegs: bool):
 	$peg_board.reset_pegs()
+	if all_pegs:
+		$peg_board.reset_pegs()
+	else:
+		$peg_board.clear_pegs()
 	$TokenBoard.reset_tokens()
 	locked = false
 	$peg_board.unlock_slots()
+	$peg_board.unlock_pegs()
 
 
 func _on_ui_clear_pegs():

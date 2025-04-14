@@ -1,6 +1,6 @@
 extends Control
 
-signal start_game
+signal start_game(all_pegs: bool)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,4 +13,5 @@ func _process(delta):
 
 
 func _on_start_game_pressed():
-	start_game.emit()
+	var all_pegs_toggle = $VBoxContainer/AllPegs.is_pressed()
+	start_game.emit(all_pegs_toggle)

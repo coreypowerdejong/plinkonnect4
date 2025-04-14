@@ -1,8 +1,10 @@
 extends CanvasLayer
 
-signal start_game_signal
+signal start_game_signal(all_pegs: bool)
 signal set_pegs
 signal clear_pegs
+
+var all_pegs := false
 
 func set_turn_label(player: String):
 	$PlayerLabel.text = player.capitalize() + "'s turn!"
@@ -23,17 +25,17 @@ func _process(_delta):
 
 func start_game():
 	$game_over.hide()
-	start_game_signal.emit()
+	start_game_signal.emit(all_pegs)
 
 func game_over(win: bool = false, winner: String = "Nobody"):
 	$game_over.set_winner(winner)
 	$game_over.show()
 
 
-func _on_new_game_pressed():
+func _on_new_game_pressed(all_pegs_toggle: bool):
 	$StartMenu.hide()
 	$PlayerLabel.show()
-	print("Showing player label")
+	all_pegs = all_pegs_toggle
 	start_game()
 
 

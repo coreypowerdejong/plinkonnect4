@@ -4,8 +4,9 @@ var rows = []
 var slots = []
 var fall_dist_labels = []
 var fall_path = []
-var fall_line = Line2D.new()
+var fall_line := Line2D.new()
 var turn: bool
+var peg_toggled := false
 
 const PEG = preload("res://game_objects/peg/peg.tscn")
 const TOKEN_SLOT = preload("res://game_objects/token_slot/token_slot.tscn")
@@ -26,6 +27,7 @@ signal slot_mouse_exited(id: int)
 
 func set_turn(player_turn: bool):
 	turn = player_turn
+	unlock_pegs()
 
 func setup_row(length: int, spacing: int, level: int, locked: bool = false, secret: bool = false) -> Array:
 	var row = []
@@ -125,10 +127,21 @@ func unlock_slots():
 	for slot in slots:
 		slot.unlock()
 
+func lock_pegs():
+	for row in rows.slice(0, -2):
+		for peg in row:
+			peg.lock()
+
+func unlock_pegs():
+	for row in rows.slice(0, -2):
+		for peg in row:
+			peg.unlock()
+
 func _on_peg_toggled(_state: bool):
 	for child in get_children():
 		if child is Line2D:
 			child.queue_free()
+	lock_pegs()
 	setup_connections(rows)
 
 func _on_token_inserted(slot_id: int) -> int:

@@ -6,28 +6,39 @@
 [ext_resource type="PackedScene" uid="uid://clfvx5hkku4xr" path="res://game_objects/fall_distribution/fall_distribution.tscn" id="4_dqyts"]
 [ext_resource type="PackedScene" uid="uid://drsh6dg8dpavn" path="res://ui/ui.tscn" id="4_vjlic"]
 
-[sub_resource type="Gradient" id="Gradient_rpovm"]
-colors = PackedColorArray(0, 0.894118, 0, 1, 0, 0.717647, 0.545098, 1)
+[sub_resource type="Gradient" id="Gradient_6ou6c"]
+colors = PackedColorArray(0.854902, 0.811765, 0, 1, 0, 1, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_rpr3l"]
-gradient = SubResource("Gradient_rpovm")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kq351"]
+gradient = SubResource("Gradient_6ou6c")
+width = 1
+height = 500
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5g54d")
 
-[node name="Background" type="TextureRect" parent="."]
-offset_left = -23.0
-offset_top = 1320.0
-offset_right = 1330.0
-offset_bottom = 2645.0
-rotation = -1.5708
-texture = SubResource("GradientTexture1D_rpr3l")
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Background" type="TextureRect" parent="Background"]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_kq351")
 
 [node name="peg_board" parent="." instance=ExtResource("1_ccpy7")]
+z_index = 1
 
 [node name="TokenBoard" parent="." instance=ExtResource("2_12akp")]
+z_index = 1
 
 [node name="FallDistribution" parent="." instance=ExtResource("4_dqyts")]
+z_index = 1
 
 [node name="UI" parent="." instance=ExtResource("4_vjlic")]
 

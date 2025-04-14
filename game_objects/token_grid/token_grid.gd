@@ -4,6 +4,7 @@ const GRID_CELL = preload("res://game_objects/grid_cell.png")
 const TOKEN_SPACING = 90
 const BOARD_WIDTH = 7
 const BOARD_HEIGHT = 6
+const CELL_COLOR = Color.WEB_GREEN
 
 var board_pixel_height: int
 
@@ -18,6 +19,7 @@ func generate_grid(width: int, height: int):
 			var sprite = Sprite2D.new()
 			sprite.texture = GRID_CELL
 			sprite.position = Vector2(i*TOKEN_SPACING, board_pixel_height - (j+1)*TOKEN_SPACING)
+			sprite.modulate = CELL_COLOR
 			add_child(sprite)
 
 

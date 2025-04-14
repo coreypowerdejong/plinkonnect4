@@ -11,6 +11,7 @@ var locked: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_tree().get_root().size_changed.connect(_on_window_resized)
 	var screen_size = Vector2(get_viewport().size)
 	var peg_board_size = $peg_board.get_size()
 	var token_board_size = $TokenBoard.get_size()
@@ -22,6 +23,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+	#$Background.size.x = get_viewport().get_visible_rect().size.y
+	#$Background.size.y = get_viewport().get_visible_rect().size.x
+	#$Background.global_position = get_viewport().get_visible_rect().position
 
 
 func _on_peg_board_token_inserted(slot_id):
@@ -79,3 +83,11 @@ func _on_peg_board_slot_mouse_exited(id):
 	$FallDistribution.clear_endpoints()
 	for p in $peg_board.fall_dist_labels:
 		p.hide()
+
+func _on_window_resized():
+	var screen_size = Vector2(get_viewport().size)
+	var peg_board_size = $peg_board.get_size()
+	var token_board_size = $TokenBoard.get_size()
+	$peg_board.global_position = (screen_size - peg_board_size) / 2 + Vector2(0, -300)
+	$TokenBoard.global_position = $peg_board.global_position + Vector2(0, token_board_size.y + 100)
+	

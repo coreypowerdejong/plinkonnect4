@@ -34,5 +34,6 @@ text = "New game"
 [node name="WinnerLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
